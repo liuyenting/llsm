@@ -35,6 +35,9 @@ class DeskewPlugin extends Command {
   @Parameter(label = "Sample piezo increment", required = true)
   var sampleIncrement: Double = 0.3000
 
+  @Parameter(label = "Objective angle (deg)", required = true)
+  var objectiveAngle: Double = 31.8
+
   @Parameter(label = "Interpolation scheme",
              choices = Array("None", "Nearest Neighbour", "Linear", "Lanczos"),
              required = false)
@@ -60,9 +63,9 @@ class DeskewPlugin extends Command {
       .asInstanceOf[Img[T] forSome { type T <: RealType[T] }]
 
     val shearFactor
-      : Double = (Math.cos(Math.toRadians(31.8)) * sampleIncrement) / pixelSize
+      : Double = (Math.cos(Math.toRadians(objectiveAngle)) * sampleIncrement) / pixelSize
 
-    val zInterval: Double = Math.sin(Math.toRadians(31.8)) * sampleIncrement
+    val zInterval: Double = Math.sin(Math.toRadians(objectiveAngle)) * sampleIncrement
 
     var axes: Array[CalibratedAxis] =
       Array.ofDim[CalibratedAxis](input.numDimensions)
